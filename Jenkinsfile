@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       image 'maven:3.39-jdk-8'
-      args '-v /Users/jenkins/.m2:/root/.m2'
+      args '-v /var/jenkins_home/.m2:/root/.m2'
     }
     
   }
