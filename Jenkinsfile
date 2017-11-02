@@ -1,9 +1,22 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'maven:3.39-jdk-8'
+      args '-v /Users/jenkins/.m2:/root/.m2'
+    }
+    
+  }
   stages {
     stage('Initialize') {
       steps {
-        echo 'Dette er en minimum pipe'
+        sh '''echo PATH = ${PATH}
+echo M2_HOME = ${M2_HOME}
+mvn clean'''
+      }
+    }
+    stage('Build') {
+      steps {
+        sh 'mvn -Dmavnen.test.failure.ignore=true install'
       }
     }
   }
