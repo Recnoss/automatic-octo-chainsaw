@@ -3,10 +3,15 @@ pipeline {
   stages {
     stage('Test') {
       steps {
-        sh '''echo ${PATH}
-pwd
+        sh '''pwd
 whoami
-uname'''
+uname
+date'''
+      }
+    }
+    stage('build') {
+      steps {
+        sh 'mvn clean'
       }
     }
   }
