@@ -35,7 +35,7 @@ pipeline {
     }
     stage('Release?  ') {
       steps {
-        input(message: 'Do you want to go to production?', id: '001', ok: 'Visst faen! Kjør på!')
+        input(message: 'Do you want to go to production?', id: '001', ok: 'Visst faen!')
       }
     }
     stage('Deploy to Prod') {
