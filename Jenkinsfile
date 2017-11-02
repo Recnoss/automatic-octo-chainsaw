@@ -19,6 +19,11 @@ pipeline {
             echo 'Integreated OK'
           }
         }
+        stage('lalala') {
+          steps {
+            mail(subject: 'test', body: 'lalalal', bcc: 'erv@ssb.no', charset: 'utf-8', from: 'erv@ssb.no', to: 'erv@ssb.no')
+          }
+        }
       }
     }
     stage('Deploy to Test') {
