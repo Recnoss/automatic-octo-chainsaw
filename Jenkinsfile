@@ -12,10 +12,25 @@ pipeline {
         sh 'echo "Building...."'
       }
     }
-    stage('Unittest') {
-      steps {
-        sh 'echo "Testing"'
-        sleep 5
+    stage('Run Tests') {
+      parallel {
+        stage('Unit test') {
+          steps {
+            sh 'echo "Testing"'
+            sleep 5
+            echo 'Tests OK'
+          }
+        }
+        stage('Integration tests') {
+          steps {
+            echo 'Tests passed OK'
+          }
+        }
+        stage('Component Tests') {
+          steps {
+            echo 'Tested all components OK'
+          }
+        }
       }
     }
     stage('Store Artifacts') {
@@ -23,7 +38,7 @@ pipeline {
         sh 'echo "copying files to nexus.ssb.no"'
       }
     }
-    stage('Deploy to Test') {
+    stage('Deploy to Test/QA') {
       parallel {
         stage('Deploy to Test') {
           steps {
@@ -35,16 +50,57 @@ pipeline {
             sleep 15
           }
         }
+        stage('Acceptance tests') {
+          steps {
+            echo 'OK'
+          }
+        }
+      }
+    }
+    stage('System Tests') {
+      parallel {
+        stage('Security Tests') {
+          steps {
+            echo 'Security OK'
+            sleep 2
+          }
+        }
+        stage('Acceptance test') {
+          steps {
+            echo 'OK'
+          }
+        }
+        stage('Performance tests') {
+          steps {
+            sleep 10
+            echo 'Ok'
+          }
+        }
       }
     }
     stage('Verify') {
       steps {
-        input(message: 'Deploy to production', id: '100', ok: 'Yes')
+        sh 'echo "Deploying"'
+        input(message: 'Deploy tp Production', id: '002', ok: 'Yes')
       }
     }
-    stage('Deploy to Production') {
-      steps {
-        sh 'echo "Deploying"'
+    stage('Deploying to Production servers') {
+      parallel {
+        stage('Prod Server 1') {
+          steps {
+            echo 'OK'
+          }
+        }
+        stage('Prod Server 2') {
+          steps {
+            echo 'OK'
+          }
+        }
+        stage('Prod Server 3') {
+          steps {
+            echo 'OK'
+          }
+        }
       }
     }
   }
