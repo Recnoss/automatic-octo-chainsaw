@@ -13,4 +13,7 @@ pipeline {
       }
     }
   }
+  environment {
+    PATH = '$PATH;C:\\cygwin64\\bin'
+  }
 }
