@@ -10,6 +10,7 @@ pipeline {
     stage('Build') {
       steps {
         sh 'echo "Building...."'
+        sleep 3
       }
     }
     stage('Run Tests') {
@@ -17,13 +18,13 @@ pipeline {
         stage('Unit test') {
           steps {
             sh 'echo "Testing"'
-            sleep 5
             echo 'Tests OK'
           }
         }
         stage('Integration tests') {
           steps {
             echo 'Tests passed OK'
+            sleep 5
           }
         }
         stage('Component Tests') {
@@ -42,17 +43,18 @@ pipeline {
       parallel {
         stage('Deploy to Test') {
           steps {
-            sleep 5
+            sleep 2
           }
         }
         stage('Deploy to QA') {
           steps {
-            sleep 15
+            sleep 5
           }
         }
         stage('Acceptance tests') {
           steps {
             echo 'OK'
+            sleep 15
           }
         }
       }
@@ -68,6 +70,7 @@ pipeline {
         stage('Acceptance test') {
           steps {
             echo 'OK'
+            sleep 4
           }
         }
         stage('Performance tests') {
@@ -81,7 +84,7 @@ pipeline {
     stage('Verify') {
       steps {
         sh 'echo "Deploying"'
-        input(message: 'Deploy tp Production', id: '002', ok: 'Yes')
+        input(message: 'Deploy to Production', id: '002', ok: 'Yes')
       }
     }
     stage('Deploying to Production servers') {
@@ -99,6 +102,7 @@ pipeline {
         stage('Prod Server 3') {
           steps {
             echo 'OK'
+            sleep 3
           }
         }
       }
