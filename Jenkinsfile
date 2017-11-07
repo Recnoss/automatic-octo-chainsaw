@@ -96,7 +96,11 @@ pipeline {
         }
         stage('Prod Server 2') {
           steps {
-            echo 'OK'
+            catchError() {
+              error 'Failed to start'
+              sh 'FAILED=True'
+            }
+            
           }
         }
         stage('Prod Server 3') {
@@ -105,6 +109,13 @@ pipeline {
             sleep 3
           }
         }
+      }
+    }
+    stage('') {
+      steps {
+        sh '''if[$FAILED]
+then
+ echo "Feilet"'''
       }
     }
   }
