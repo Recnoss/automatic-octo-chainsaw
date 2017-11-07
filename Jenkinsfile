@@ -111,12 +111,14 @@ pipeline {
         }
       }
     }
-    stage('') {
+    stage('error') {
       steps {
-        sh '''if[$FAILED]
-then
- echo "Feilet"'''
+        sh '''if(!hudson.model.Result.SUCCESS.equals(currentBuild.rawBuild.getPreviousBuild()?.getResult())) {
+  echo "last build failed"
+}else {
+ echo "last build failed"
+}'''
+        }
       }
     }
   }
-}
