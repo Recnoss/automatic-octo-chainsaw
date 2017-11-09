@@ -3,13 +3,12 @@ pipeline {
   stages {
     stage('Initialize') {
       steps {
-        sh 'mvn --version'
+        sh 'mvn clean'
       }
     }
     stage('Build') {
       steps {
-        sh 'java -version'
-        sleep 3
+        sh 'mvn install dockerfile:build'
       }
     }
     stage('Store Artifacts') {
