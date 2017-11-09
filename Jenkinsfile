@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Build') {
       steps {
-        sh 'java --version'
+        sh 'java -version'
         sleep 3
       }
     }
